@@ -1,0 +1,51 @@
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:gold;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+#eventName{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+#eventTime,
+#countdown,
+#impact,
+#bias{
+    margin:10px 0;
+    font-size:18px;
+}
+
+.buy{
+    color:lime;
+}
+
+.sell{
+    color:red;
+}
+
+.news-item{
+    padding:10px;
+    border-bottom:1px solid #334155;
+}
