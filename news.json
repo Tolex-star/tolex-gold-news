@@ -1,0 +1,20 @@
+[
+  {
+    "event": "US CPI",
+    "date": "2026-06-12 20:30 WIB",
+    "impact": "High",
+    "country": "USD"
+  },
+  {
+    "event": "FOMC Interest Rate Decision",
+    "date": "2026-06-18 01:00 WIB",
+    "impact": "High",
+    "country": "USD"
+  },
+  {
+    "event": "Non Farm Payrolls",
+    "date": "2026-07-03 20:30 WIB",
+    "impact": "High",
+    "country": "USD"
+  }
+]
