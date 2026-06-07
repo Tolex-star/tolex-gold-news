@@ -7,24 +7,27 @@ async function loadNews() {
             {
                 event: "US CPI",
                 date: "2026-06-12T20:30:00",
-                impact: "High",
+                impact: "HIGH IMPACT",
                 currency: "USD",
+                confidence: "82%",
                 volatility: "★★★★★ EXTREME"
             },
 
             {
                 event: "FOMC Interest Rate Decision",
                 date: "2026-06-18T01:00:00",
-                impact: "High",
+                impact: "HIGH IMPACT",
                 currency: "USD",
+                confidence: "95%",
                 volatility: "★★★★★ EXTREME"
             },
 
             {
                 event: "Non Farm Payrolls",
                 date: "2026-07-03T20:30:00",
-                impact: "High",
+                impact: "HIGH IMPACT",
                 currency: "USD",
+                confidence: "85%",
                 volatility: "★★★★★ EXTREME"
             }
 
@@ -68,7 +71,7 @@ async function loadNews() {
         let statusText = "";
         let statusColor = "";
 
-        if (minutes > 60 || days > 0) {
+        if (days > 0 || minutes > 60) {
 
             statusText = "🟢 SAFE TO TRADE";
             statusColor = "#008f11";
@@ -101,22 +104,38 @@ async function loadNews() {
 
             recommendation =
             `
-            <h3 style="color:#00ff88">
-            🟢 BUY XAUUSD
-            </h3>
+            <h2 style="color:#00ff88">
+            🟢 BUY GOLD
+            </h2>
 
             <p>
-            Jika CPI lebih rendah dari forecast.
+            Confidence : ${upcoming.confidence}
             </p>
 
             <p>
-            Jika CPI lebih tinggi dari forecast
-            → 🔴 STRONG SELL XAUUSD
+            Expected Volatility :
+            ${upcoming.volatility}
             </p>
 
-            <h4 style="color:gold">
-            Volatility : ★★★★★ EXTREME
-            </h4>
+            <hr>
+
+            <p>
+            CPI Actual < Forecast
+            <br>
+            🟢 STRONG BUY GOLD
+            </p>
+
+            <p>
+            CPI Actual > Forecast
+            <br>
+            🔴 STRONG SELL GOLD
+            </p>
+
+            <p>
+            CPI Actual ≈ Forecast
+            <br>
+            ⚪ NEUTRAL
+            </p>
             `;
         }
 
@@ -124,22 +143,38 @@ async function loadNews() {
 
             recommendation =
             `
-            <h3 style="color:#ff5555">
-            🔴 SELL XAUUSD
-            </h3>
+            <h2 style="color:#ff5555">
+            🔴 SELL GOLD
+            </h2>
 
             <p>
-            Jika NFP lebih tinggi dari forecast.
+            Confidence : ${upcoming.confidence}
             </p>
 
             <p>
-            Jika NFP lebih rendah dari forecast
-            → 🟢 STRONG BUY XAUUSD
+            Expected Volatility :
+            ${upcoming.volatility}
             </p>
 
-            <h4 style="color:gold">
-            Volatility : ★★★★★ EXTREME
-            </h4>
+            <hr>
+
+            <p>
+            NFP Actual > Forecast
+            <br>
+            🔴 STRONG SELL GOLD
+            </p>
+
+            <p>
+            NFP Actual < Forecast
+            <br>
+            🟢 STRONG BUY GOLD
+            </p>
+
+            <p>
+            NFP Actual ≈ Forecast
+            <br>
+            ⚪ NEUTRAL
+            </p>
             `;
         }
 
@@ -147,23 +182,38 @@ async function loadNews() {
 
             recommendation =
             `
-            <h3 style="color:#ffaa00">
-            ⚠ WAIT FOMC
-            </h3>
+            <h2 style="color:#ffaa00">
+            ⚠ FOMC EVENT
+            </h2>
 
             <p>
-            Rate Hike
-            → 🔴 SUPER SELL GOLD
+            Confidence : ${upcoming.confidence}
             </p>
 
             <p>
-            Rate Cut
-            → 🟢 SUPER BUY GOLD
+            Expected Volatility :
+            ${upcoming.volatility}
             </p>
 
-            <h4 style="color:gold">
-            Volatility : ★★★★★ EXTREME
-            </h4>
+            <hr>
+
+            <p>
+            RATE CUT
+            <br>
+            🟢 STRONG BUY GOLD
+            </p>
+
+            <p>
+            RATE HIKE
+            <br>
+            🔴 STRONG SELL GOLD
+            </p>
+
+            <p>
+            NO CHANGE
+            <br>
+            ⚪ NEUTRAL
+            </p>
             `;
         }
 
@@ -178,10 +228,10 @@ async function loadNews() {
             `⏰ ${days}D ${hours}H ${minutes}M ${seconds}S`;
 
         document.getElementById("impact").innerHTML =
-            "Impact : " + upcoming.impact;
+            "🔴 HIGH IMPACT";
 
         document.getElementById("bias").innerHTML =
-            "Currency : " + upcoming.currency;
+            "🇺🇸 USD NEWS";
 
         document.getElementById("goldBias").innerHTML =
             recommendation;
@@ -191,15 +241,20 @@ async function loadNews() {
                 item =>
                 `
                 <div class="news-item">
+                    <strong>${item.event}</strong>
+                    <br>
                     ${item.date} WIB
-                    -
-                    ${item.event}
+                    <br>
+                    ${item.volatility}
                 </div>
                 `
             ).join("");
 
         document.getElementById("newsList").innerHTML =
             newsHtml;
+
+        document.getElementById("lastUpdate").innerHTML =
+            new Date().toLocaleTimeString("id-ID");
 
     }
 
@@ -208,7 +263,7 @@ async function loadNews() {
         console.log(err);
 
         document.getElementById("eventName").innerHTML =
-            "ERROR";
+            "SYSTEM ERROR";
     }
 }
 
