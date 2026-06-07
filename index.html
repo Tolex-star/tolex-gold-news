@@ -4,36 +4,298 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TOLEX GOLD NEWS GUARD</title>
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    background:#07152d;
+    color:white;
+    font-family:Segoe UI,Arial,sans-serif;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#FFD700;
+    font-size:60px;
+    margin:0;
+}
+
+.subtitle{
+    color:#bfc7d5;
+    margin-top:10px;
+    letter-spacing:2px;
+}
+
+.status-bar{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.status-card{
+    flex:1;
+    min-width:250px;
+    background:#1a2740;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 0 20px rgba(255,215,0,0.15);
+}
+
+.status-title{
+    color:#FFD700;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.status-value{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.green{
+    color:#00D26A;
+}
+
+.red{
+    color:#FF4D4D;
+}
+
+.card{
+    background:#1a2740;
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:25px;
+    box-shadow:0 0 20px rgba(255,215,0,0.15);
+}
+
+.card h2{
+    margin-top:0;
+    color:#FFD700;
+}
+
+#eventName{
+    font-size:48px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+#eventTime{
+    font-size:28px;
+    margin-top:10px;
+}
+
+#countdown{
+    margin-top:20px;
+    font-size:36px;
+    font-weight:bold;
+    color:#FFD700;
+}
+
+.info-row{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.badge{
+    padding:10px 18px;
+    border-radius:25px;
+    font-weight:bold;
+}
+
+.high{
+    background:#ff3b3b;
+}
+
+.currency{
+    background:#244d8a;
+}
+
+.bias-card{
+    margin-top:25px;
+    background:#112744;
+    border-left:5px solid #FFD700;
+    padding:20px;
+    border-radius:10px;
+}
+
+.bias-title{
+    color:#FFD700;
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.buy{
+    color:#00D26A;
+    font-weight:bold;
+}
+
+.sell{
+    color:#FF4D4D;
+    font-weight:bold;
+}
+
+.trade-status{
+    text-align:center;
+    padding:20px;
+    border-radius:15px;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:25px;
+    background:#006400;
+}
+
+#newsList .news-item{
+    padding:15px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    font-size:20px;
+}
+
+.footer{
+    text-align:center;
+    color:#999;
+    margin-top:20px;
+}
+
+@media(max-width:768px){
+
+.header h1{
+    font-size:34px;
+}
+
+#eventName{
+    font-size:30px;
+}
+
+#countdown{
+    font-size:24px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
 
+<div class="header">
+
 <h1>TOLEX GOLD NEWS GUARD</h1>
+
+<div class="subtitle">
+MONITOR HIGH IMPACT NEWS • PROTECT YOUR GOLD TRADES
+</div>
+
+</div>
+
+<div class="status-bar">
+
+<div class="status-card">
+<div class="status-title">SYSTEM STATUS</div>
+<div class="status-value green">ACTIVE</div>
+</div>
+
+<div class="status-card">
+<div class="status-title">LAST UPDATE</div>
+<div class="status-value" id="lastUpdate">Loading...</div>
+</div>
+
+<div class="status-card">
+<div class="status-title">AUTO REFRESH</div>
+<div class="status-value">60 SEC</div>
+</div>
+
+</div>
+
+<div class="trade-status" id="tradeStatus">
+🟢 SAFE TO TRADE
+</div>
 
 <div class="card">
 
-<h2>Next High Impact News</h2>
+<h2>NEXT HIGH IMPACT NEWS</h2>
 
 <div id="eventName">Loading...</div>
+
 <div id="eventTime"></div>
+
 <div id="countdown"></div>
-<div id="impact"></div>
-<div id="bias"></div>
+
+<div class="info-row">
+
+<div class="badge high" id="impact">
+HIGH IMPACT
+</div>
+
+<div class="badge currency" id="bias">
+USD
+</div>
+
+</div>
+
+<div class="bias-card">
+
+<div class="bias-title">
+GOLD BIAS ANALYSIS
+</div>
+
+<div id="goldBias">
+
+<div class="sell">
+Actual > Forecast → SELL XAUUSD
+</div>
+
+<br>
+
+<div class="buy">
+Actual < Forecast → BUY XAUUSD
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="card">
 
-<h2>Upcoming News</h2>
+<h2>UPCOMING HIGH IMPACT NEWS</h2>
 
 <div id="newsList"></div>
 
 </div>
 
+<div class="footer">
+© TOLEX GOLD NEWS GUARD
 </div>
+
+</div>
+
+<script>
+
+document.getElementById("lastUpdate").innerHTML =
+new Date().toLocaleTimeString("id-ID");
+
+</script>
 
 <script src="config.js"></script>
 <script src="app.js"></script>
