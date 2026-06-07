@@ -2,63 +2,54 @@ async function loadNews() {
 
     try {
 
-        const response = await fetch(
-            `https://financialmodelingprep.com/api/v3/economic_calendar?from=2026-06-01&to=2026-12-31&apikey=${API_KEY}`
-        );
-
+        const response = await fetch("news.json");
         const data = await response.json();
 
         if (!data || data.length === 0) {
+
             document.getElementById("eventName").innerHTML =
                 "No News Found";
+
             return;
         }
 
-        const now = new Date();
-
-        const upcoming = data.find(item => {
-            return new Date(item.date) > now;
-        });
-
-        if (!upcoming) {
-            document.getElementById("eventName").innerHTML =
-                "No Upcoming News";
-            return;
-        }
+        const nextNews = data[0];
 
         document.getElementById("eventName").innerHTML =
-            upcoming.event || "Economic News";
+            nextNews.event;
 
         document.getElementById("eventTime").innerHTML =
-            upcoming.date;
+            nextNews.date;
 
         document.getElementById("impact").innerHTML =
-            "Impact: " + (upcoming.impact || "Unknown");
+            "Impact: " + nextNews.impact;
 
         document.getElementById("bias").innerHTML =
-            "Currency: " + (upcoming.country || "");
+            "Currency: " + nextNews.country;
 
-        const newsHtml = data
-            .slice(0, 10)
-            .map(item =>
-                `<div class="news-item">
-                    ${item.date} - ${item.event}
-                </div>`
-            )
-            .join("");
+        let html = "";
+
+        data.forEach(item => {
+
+            html += `
+            <div class="news-item">
+                ${item.date} - ${item.event}
+            </div>
+            `;
+
+        });
 
         document.getElementById("newsList").innerHTML =
-            newsHtml;
+            html;
 
-    } catch (err) {
+    }
+    catch (err) {
 
         document.getElementById("eventName").innerHTML =
-            "API Error";
+            "News Load Error";
 
         console.error(err);
     }
 }
 
 loadNews();
-
-setInterval(loadNews, 60000);
